@@ -1,6 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/contexts/LanguageContext';
+import Link from 'next/link';
 
 export default function Footer() {
   const { dict } = useLanguage();
@@ -19,10 +20,16 @@ export default function Footer() {
         <p style={{ marginBottom: '0.5rem' }}>
           {dict.footer.disclaimer}
         </p>
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-          <span style={{ cursor: 'not-allowed' }}>Terms of Service</span>
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link href="/about" style={{ textDecoration: 'none', color: 'inherit' }}>About</Link>
           <span>•</span>
-          <span style={{ cursor: 'not-allowed' }}>Privacy Policy</span>
+          <Link href="/contact" style={{ textDecoration: 'none', color: 'inherit' }}>Contact</Link>
+          <span>•</span>
+          <Link href="/terms" style={{ textDecoration: 'none', color: 'inherit' }}>Terms</Link>
+          <span>•</span>
+          <Link href="/privacy" style={{ textDecoration: 'none', color: 'inherit' }}>Privacy</Link>
+          <span>•</span>
+          <Link href="/data-deletion" style={{ textDecoration: 'none', color: 'inherit' }}>Data Deletion</Link>
         </div>
         <p style={{ marginTop: '1rem', fontSize: '0.75rem' }}>
           &copy; {new Date().getFullYear()} Connection Lab. All rights reserved.
