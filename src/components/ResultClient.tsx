@@ -101,6 +101,35 @@ export default function ResultClient() {
         ))}
       </section>
 
+      {/* Agreement Options (Level 2 Wow Factor) */}
+      {result.agreement_options && (
+        <section className={styles.card}>
+          <h2 className={styles.cardTitle}>{(dict.result as any).agreementTitle}</h2>
+          <div className={styles.agreementGrid} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+            {result.agreement_options.map((option, idx) => (
+              <div key={idx} className={styles.option} style={{ cursor: 'default' }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: '#1e293b' }}>{option.title}</h3>
+                <p style={{ fontSize: '0.95rem', color: '#334155', marginBottom: '1rem' }}>{option.description}</p>
+                
+                <div style={{ marginBottom: '0.5rem' }}>
+                  <strong style={{ color: '#059669', fontSize: '0.9rem' }}>{(dict.result as any).pros}:</strong>
+                  <ul style={{ paddingLeft: '1.2rem', margin: '0.3rem 0', fontSize: '0.9rem', color: '#475569' }}>
+                    {option.pros.map((p, i) => <li key={i}>{p}</li>)}
+                  </ul>
+                </div>
+
+                <div>
+                  <strong style={{ color: '#dc2626', fontSize: '0.9rem' }}>{(dict.result as any).cons}:</strong>
+                  <ul style={{ paddingLeft: '1.2rem', margin: '0.3rem 0', fontSize: '0.9rem', color: '#475569' }}>
+                    {option.cons.map((c, i) => <li key={i}>{c}</li>)}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <AdUnit format="auto" />
 
       {/* Next Sentences */}

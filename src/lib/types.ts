@@ -1,12 +1,21 @@
 export type Mode = "couple" | "work" | "family";
 export type Goal = "repair" | "persuate" | "agree" | "feedback" | "boundaries";
+export type Intensity = 'light' | 'medium' | 'heavy';
 
 export interface AnalysisRequest {
   mode: Mode;
   goal: Goal;
+  intensity?: Intensity;
   conversation: string;
   image?: string; // Base64 string
   language?: 'ko' | 'en';
+}
+
+export interface AgreementOption {
+  title: string;
+  description: string;
+  pros: string[];
+  cons: string[];
 }
 
 export interface AnalysisResult {
@@ -20,6 +29,7 @@ export interface AnalysisResult {
     why_risky: string;
     neutral_reframe: string;
   }[];
+  agreement_options?: AgreementOption[];
   next_sentences: {
     soft: string;
     firm: string;

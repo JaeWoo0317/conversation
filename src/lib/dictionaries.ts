@@ -26,6 +26,15 @@ export const dictionaries = {
       feedback: '피드백 주기',
       boundaries: '경계 설정 / 거절하기'
     },
+    intensity: {
+      label: '갈등 강도 (Intensity)',
+      light: '가벼운 언쟁',
+      medium: '중요한 갈등',
+      heavy: '심각한 위기'
+    },
+    footer: {
+      disclaimer: '본 서비스는 AI 심리 상담 검토 도구이며, 법적 또는 의학적 조언을 대체할 수 없습니다. 위기 상황 시 전문가의 도움을 받으세요.'
+    },
     result: {
       backLink: '← 다른 대화 분석하기',
       title: '분석 리포트',
@@ -46,7 +55,10 @@ export const dictionaries = {
       scenarioA: '상대가 방어적으로 나올 때:',
       scenarioB: '상대가 회피하거나 무시할 때:',
       partnerReply: '상대 반응:',
-      recommendation: '추천 대응:'
+      recommendation: '추천 대응:',
+      agreementTitle: '해결을 위한 합의안 제안',
+      pros: '장점',
+      cons: '단점'
     },
     limitModal: {
       title: '일일 무료 분석 한도 초과',
@@ -80,6 +92,15 @@ export const dictionaries = {
       feedback: 'Give Feedback',
       boundaries: 'Set Boundaries'
     },
+    intensity: {
+      label: 'Conflict Intensity',
+      light: 'Light Argument',
+      medium: 'Major Conflict',
+      heavy: 'Serious Crisis'
+    },
+    footer: {
+      disclaimer: 'This service is an AI counseling tool and does not replace legal or medical advice. Seek professional help in crisis situations.'
+    },
     result: {
       backLink: '← Analyze another conversation',
       title: 'Reflection Report',
@@ -100,7 +121,10 @@ export const dictionaries = {
       scenarioA: 'If they react with defensiveness:',
       scenarioB: 'If they react with avoidance:',
       partnerReply: 'They say:',
-      recommendation: 'You say:'
+      recommendation: 'You say:',
+      agreementTitle: 'Proposed Agreements',
+      pros: 'Pros',
+      cons: 'Cons'
     },
     limitModal: {
       title: 'Daily Limit Reached',

@@ -1,4 +1,4 @@
-import { Mode, Goal } from './types';
+import { Mode, Goal, Intensity } from './types';
 import { Language } from './dictionaries';
 
 export const SYSTEM_PROMPT = `You are an expert communication coach and conflict resolution specialist. 
@@ -7,7 +7,7 @@ You must always output valid JSON adhering strictly to the schema provided.
 Do not use markdown formatting in the JSON output.
 The tone should be empathetic, objective, and solution-oriented.`;
 
-export function getUserPrompt(mode: Mode, goal: Goal, conversation: string, language: Language = 'ko'): string {
+export function getUserPrompt(mode: Mode, goal: Goal, intensity: Intensity, conversation: string, language: Language = 'ko'): string {
   const isKo = language === 'ko';
 
   const modeInstructions = {
@@ -44,6 +44,18 @@ export function getUserPrompt(mode: Mode, goal: Goal, conversation: string, lang
     ? "모든 출력은 '한국어(Korean)'로 작성해야 합니다."
     : "All output must be in 'English'.";
 
+  const intensityInstructions = {
+    light: isKo
+      ? "갈등 강도가 '가벼움'입니다. 유머러스하고 가벼운 터치로 분위기를 환기시키는 조언을 포함하세요."
+      : "Intensity is 'Light'. Include humorous and light-hearted advice to diffuse the situation.",
+    medium: isKo
+      ? "갈등 강도가 '중요함'입니다. 문제의 핵심을 정확히 짚고, 감정적 동요를 줄이는 데 집중하세요."
+      : "Intensity is 'Medium'. Focus on identifying the core issue and reducing emotional volatility.",
+    heavy: isKo
+      ? "갈등 강도가 '심각함'입니다. 안전을 최우선으로 하고, 자극적인 표현을 삼가며 신중하고 방어적인 접근을 권장하세요."
+      : "Intensity is 'Heavy'. Prioritize safety, avoid triggering language, and recommend a cautious, defensive approach."
+  };
+
   const jsonStructure = isKo ? `
 {
   "neutral_summary": {
@@ -57,7 +69,27 @@ export function getUserPrompt(mode: Mode, goal: Goal, conversation: string, lang
       "why_risky": "왜 이 표현이 위험한지 설명 (비난조, 모호함, 공격적 등)",
       "neutral_reframe": "객관적이고 부드럽게 고친 표현"
     }
-  ] (최대 3개),
+  ],
+  "agreement_options": [
+    {
+      "title": "A안 (사용자 중심)",
+      "description": "사용자의 입장을 최대한 반영한 합의안",
+      "pros": ["장점 1", "장점 2"],
+      "cons": ["단점 1"]
+    },
+    {
+      "title": "B안 (상대방 중심)",
+      "description": "상대방의 입장을 더 배려한 합의안",
+      "pros": ["장점 1"],
+      "cons": ["사용자가 감수해야 할 점"]
+    },
+    {
+      "title": "절충안 (Win-Win)",
+      "description": "양쪽 모두 조금씩 양보하여 얻을 수 있는 최선의 결과",
+      "pros": ["장점 1", "장점 2"],
+      "cons": ["단점 1"]
+    }
+  ],
   "next_sentences": {
     "soft": "부드럽고 공감적인 답변 옵션",
     "firm": "단호하게 경계를 설정하는 답변 옵션",
@@ -84,10 +116,30 @@ export function getUserPrompt(mode: Mode, goal: Goal, conversation: string, lang
   "misunderstanding_points": [
     {
       "quote": "A specific risky/misinterpreted sentence from the text",
-      "why_risky": "Why this is problematic (e.g., blame, vague, aggressive)",
+      "why_risky": "Why this is problematic",
       "neutral_reframe": "A better way to say it objectively"
     }
-  ] (Max 3 points),
+  ],
+  "agreement_options": [
+    {
+      "title": "Option A (User Focused)",
+      "description": "Agreement favoring the user's perspective",
+      "pros": ["Pro 1", "Pro 2"],
+      "cons": ["Con 1"]
+    },
+    {
+      "title": "Option B (Partner Focused)",
+      "description": "Agreement favoring the partner's perspective",
+      "pros": ["Pro 1"],
+      "cons": ["Con 1"]
+    },
+    {
+      "title": "Compromise (Win-Win)",
+      "description": "Balanced solution requiring mutual concession",
+      "pros": ["Pro 1", "Pro 2"],
+      "cons": ["Con 1"]
+    }
+  ],
   "next_sentences": {
     "soft": "A gentle, empathetic response option",
     "firm": "A clear, boundary-setting response option",
@@ -95,12 +147,12 @@ export function getUserPrompt(mode: Mode, goal: Goal, conversation: string, lang
   },
   "rehearsal": {
     "scenarioA": {
-      "partner_reply": "A possible negative/defensive reaction from the partner",
-      "recommended_answer": "How to handle this reaction constructively"
+      "partner_reply": "A possible negative/defensive reaction",
+      "recommended_answer": "How to handle this reaction"
     },
     "scenarioB": {
-      "partner_reply": "A possible dismissive/avoidant reaction from the partner",
-      "recommended_answer": "How to handle this reaction constructively"
+      "partner_reply": "A possible dismissive/avoidant reaction",
+      "recommended_answer": "How to handle this reaction"
     }
   }
 }
@@ -115,6 +167,7 @@ Analyze the following conversation:
 Context:
 - Mode: ${mode} (${modeInstructions[mode]})
 - Goal: ${goal} (${goalInstructions[goal]})
+- Intensity: ${intensity} (${intensityInstructions[intensity]})
 
 Provide a JSON response with the following structure:
 ${jsonStructure}

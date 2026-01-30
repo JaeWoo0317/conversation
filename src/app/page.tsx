@@ -15,6 +15,7 @@ export default function Home() {
   
   const [mode, setMode] = useState<Mode>('couple');
   const [goal, setGoal] = useState<Goal>('repair');
+  const [intensity, setIntensity] = useState<'light'|'medium'|'heavy'>('medium');
   const [conversation, setConversation] = useState('');
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -82,7 +83,7 @@ export default function Home() {
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode, goal, conversation, image, language }),
+        body: JSON.stringify({ mode, goal, intensity, conversation, image, language }),
       });
 
       if (!res.ok) throw new Error('Analysis failed');
@@ -138,6 +139,31 @@ export default function Home() {
             <option value="feedback">{dict.goals.feedback}</option>
             <option value="boundaries">{dict.goals.boundaries}</option>
           </select>
+        </div>
+
+        <div className={styles.fieldGroup}>
+          <label className={styles.label}>{dict.intensity.label}</label>
+          <div className={styles.intensityWrapper} style={{ display: 'flex', gap: '0.5rem' }}>
+            {['light', 'medium', 'heavy'].map((level) => (
+              <button
+                key={level}
+                type="button"
+                onClick={() => setIntensity(level as any)}
+                style={{
+                  flex: 1,
+                  padding: '0.75rem',
+                  borderRadius: '8px',
+                  border: intensity === level ? '2px solid #4f46e5' : '1px solid #e2e8f0',
+                  backgroundColor: intensity === level ? '#eef2ff' : 'white',
+                  color: intensity === level ? '#4f46e5' : '#64748b',
+                  fontWeight: intensity === level ? 600 : 400,
+                  cursor: 'pointer'
+                }}
+              >
+                {(dict.intensity as any)[level]}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className={styles.fieldGroup}>

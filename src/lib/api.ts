@@ -78,7 +78,7 @@ export async function analyzeConversation(request: AnalysisRequest): Promise<Ana
   }
 
   try {
-    const prompt = getUserPrompt(request.mode, request.goal, request.conversation, request.language);
+    const prompt = getUserPrompt(request.mode, request.goal, request.intensity || 'medium', request.conversation || "Image Analysis", request.language);
     
     let apiContent: any[] = [];
     
@@ -97,7 +97,7 @@ export async function analyzeConversation(request: AnalysisRequest): Promise<Ana
        apiContent.push({
          text: SYSTEM_PROMPT + "\n\n" + 
                (request.language === 'ko' ? "이미지에 있는 대화 내용을 분석해주세요. " : "Analyze the conversation in the image. ") +
-               getUserPrompt(request.mode, request.goal, request.conversation || "(See image)", request.language)
+               getUserPrompt(request.mode, request.goal, request.intensity || 'medium', request.conversation || "(See image)", request.language)
        });
     } else {
        // Text only

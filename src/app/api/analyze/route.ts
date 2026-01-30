@@ -38,7 +38,9 @@ export async function POST(request: Request) {
     }
 
     const start = Date.now();
-    const result = await analyzeConversation(body);
+    // Default to 'medium' if not provided (for backward compatibility)
+    const intensity = body.intensity || 'medium';
+    const result = await analyzeConversation({ ...body, intensity });
     console.log(`Analysis took ${Date.now() - start}ms`);
 
     // Save to Supabase if user is logged in
