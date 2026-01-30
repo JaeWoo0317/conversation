@@ -53,6 +53,15 @@ export interface Reflection {
   conversation: string;
   mode: Mode;
   goal: Goal;
+  intensity?: Intensity;
   result: AnalysisResult;
+  created_at: string;
+}
+
+export interface SavedSentence {
+  id: string;
+  user_id: string;
+  sentence: string;
+  category: string;
   created_at: string;
 }

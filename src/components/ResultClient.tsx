@@ -59,11 +59,44 @@ export default function ResultClient() {
     alert(dict.result.copied);
   };
 
+  const handleSave = async (sentence: string, category: string) => {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      alert('Please log in to save sentences.');
+      return;
+    }
+
+    const { error } = await supabase.from('saved_sentences').insert({
+        user_id: user.id,
+        sentence: sentence,
+        category: category
+    });
+
+    if (error) {
+        console.error('Error saving:', error);
+        alert('Failed to save.');
+    } else {
+        alert('Saved to favorites! ❤️');
+    }
+  };
+
+  const shareResult = () => {
+     const url = window.location.href;
+     copyToClipboard(url);
+  };
+
   return (
     <main className={styles.container}>
       <div className={styles.header}>
         <Link href="/" className={styles.backLink}>{dict.result.backLink}</Link>
-        <h1 className={styles.cardTitle}>{dict.result.title}</h1>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <button onClick={shareResult} className={styles.copyBtn} style={{ fontSize: '0.9rem' }}>
+            🔗 Share
+          </button>
+          <h1 className={styles.cardTitle}>{dict.result.title}</h1>
+        </div>
       </div>
 
       {/* Neutral Summary */}
@@ -136,27 +169,29 @@ export default function ResultClient() {
       <section className={styles.card}>
         <h2 className={styles.cardTitle}>{dict.result.nextSentencesTitle}</h2>
         <div className={styles.responseOptions}>
-          <div className={styles.option} onClick={() => copyToClipboard(result.next_sentences.soft)}>
-            <div className={styles.optionHeader}>
-              <span className={styles.optionLabel}>{dict.result.soft}</span>
-              <button className={styles.copyBtn}>{dict.result.copy}</button>
+          {['soft', 'firm', 'short'].map((type) => (
+            <div key={type} className={styles.option}>
+               <div className={styles.optionHeader}>
+                  <span className={styles.optionLabel}>{(dict.result as any)[type]}</span>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button 
+                      className={styles.copyBtn} 
+                      onClick={() => handleSave(result.next_sentences[type as keyof typeof result.next_sentences], type)}
+                      title="Save to favorites"
+                    >
+                      ❤️
+                    </button>
+                    <button 
+                      className={styles.copyBtn} 
+                      onClick={() => copyToClipboard(result.next_sentences[type as keyof typeof result.next_sentences])}
+                    >
+                      {dict.result.copy}
+                    </button>
+                  </div>
+               </div>
+               <p>{result.next_sentences[type as keyof typeof result.next_sentences]}</p>
             </div>
-            <p>{result.next_sentences.soft}</p>
-          </div>
-          <div className={styles.option} onClick={() => copyToClipboard(result.next_sentences.firm)}>
-            <div className={styles.optionHeader}>
-              <span className={styles.optionLabel}>{dict.result.firm}</span>
-              <button className={styles.copyBtn}>{dict.result.copy}</button>
-            </div>
-            <p>{result.next_sentences.firm}</p>
-          </div>
-          <div className={styles.option} onClick={() => copyToClipboard(result.next_sentences.short)}>
-            <div className={styles.optionHeader}>
-              <span className={styles.optionLabel}>{dict.result.short}</span>
-              <button className={styles.copyBtn}>{dict.result.copy}</button>
-            </div>
-            <p>{result.next_sentences.short}</p>
-          </div>
+          ))}
         </div>
       </section>
 
