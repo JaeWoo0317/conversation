@@ -9,6 +9,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { createClient } from '@/lib/supabase/client';
 import AdUnit from '@/components/AdUnit';
 
+import { ResultSkeleton } from '@/components/SkeletonLoader';
+
 export default function ResultClient() {
   const params = useParams();
   const router = useRouter();
@@ -50,7 +52,7 @@ export default function ResultClient() {
     loadData();
   }, [params.id, router]);
 
-  if (loading) return <div className={styles.container}>Loading results...</div>;
+  if (loading) return <ResultSkeleton />;
 
   if (!result) return null;
 
@@ -89,7 +91,7 @@ export default function ResultClient() {
 
   return (
     <main className={styles.container}>
-      <div className={styles.header}>
+      <div className={`${styles.header} fade-in`}>
         <Link href="/" className={styles.backLink}>{dict.result.backLink}</Link>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <button onClick={shareResult} className={styles.copyBtn} style={{ fontSize: '0.9rem' }}>
@@ -100,7 +102,7 @@ export default function ResultClient() {
       </div>
 
       {/* Neutral Summary */}
-      <section className={styles.card}>
+      <section className={`${styles.card} slide-up`} style={{ animationDelay: '0.1s' }}>
         <h2 className={styles.cardTitle}>{dict.result.summaryTitle}</h2>
         <div className={styles.summaryGrid}>
           <div>
@@ -123,7 +125,7 @@ export default function ResultClient() {
       </section>
 
       {/* Misunderstanding Points */}
-      <section className={styles.card}>
+      <section className={`${styles.card} slide-up`} style={{ animationDelay: '0.2s' }}>
         <h2 className={styles.cardTitle}>{dict.result.misunderstandingTitle}</h2>
         {result.misunderstanding_points.map((point, idx) => (
           <div key={idx} className={styles.point}>
@@ -136,7 +138,7 @@ export default function ResultClient() {
 
       {/* Agreement Options (Level 2 Wow Factor) */}
       {result.agreement_options && (
-        <section className={styles.card}>
+        <section className={`${styles.card} slide-up`} style={{ animationDelay: '0.3s' }}>
           <h2 className={styles.cardTitle}>{(dict.result as any).agreementTitle}</h2>
           <div className={styles.agreementGrid} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
             {result.agreement_options.map((option, idx) => (
@@ -166,7 +168,7 @@ export default function ResultClient() {
       <AdUnit format="auto" />
 
       {/* Next Sentences */}
-      <section className={styles.card}>
+      <section className={`${styles.card} slide-up`} style={{ animationDelay: '0.4s' }}>
         <h2 className={styles.cardTitle}>{dict.result.nextSentencesTitle}</h2>
         <div className={styles.responseOptions}>
           {['soft', 'firm', 'short'].map((type) => (
@@ -196,7 +198,7 @@ export default function ResultClient() {
       </section>
 
       {/* Rehearsal */}
-      <section className={styles.card}>
+      <section className={`${styles.card} slide-up`} style={{ animationDelay: '0.5s' }}>
         <h2 className={styles.cardTitle}>{dict.result.rehearsalTitle}</h2>
         <div className={styles.scenario}>
           <div className={styles.scenarioTitle}>{dict.result.scenarioA}</div>

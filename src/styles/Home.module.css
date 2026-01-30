@@ -7,17 +7,32 @@
 .header {
   text-align: center;
   margin-bottom: 3rem;
+  animation: slideUp 0.6s ease-out;
+}
+
+.heroBadge {
+  display: inline-block;
+  background: #e0e7ff;
+  color: #4f46e5;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .title {
   font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--primary-color);
+  font-weight: 800;
   margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
-  color: var(--secondary-color);
+  color: #64748b;
   font-size: 1.1rem;
 }
 
@@ -86,54 +101,58 @@
   color: var(--secondary-color);
 }
 
-.secondaryButton {
-  background-color: #f1f5f9;
-  color: #334155;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-weight: 600;
+.fileDropZone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
   cursor: pointer;
-  width: 100%;
-  transition: background-color 0.2s;
-  margin-top: 0.5rem;
+  background-color: #f8fafc;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.secondaryButton:hover {
-  background-color: #e2e8f0;
+.fileDropZone:hover {
+  border-color: #4f46e5;
+  background-color: #eef2ff;
+}
+
+.fileDropText {
+  color: #64748b;
+  font-weight: 500;
 }
 
 .imagePreview {
-  width: 100%;
-  margin-top: 0.5rem;
   position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-top: 0.5rem;
 }
 
 .previewImg {
   width: 100%;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  max-height: 300px;
-  object-fit: contain;
-  background: #f8fafc;
+  display: block;
 }
 
 .removeButton {
-  background-color: #ef4444;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(0, 0, 0, 0.6);
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
   cursor: pointer;
-  margin-top: 0.5rem;
-  width: 100%;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
 }
 
 .removeButton:hover {
-  background-color: #dc2626;
-}
-
-.fileInputWrapper {
-  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
 }

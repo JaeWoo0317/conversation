@@ -107,7 +107,8 @@ export default function Home() {
     <main className={styles.container}>
       {showLimitModal && <LimitModal onClose={() => setShowLimitModal(false)} />}
       
-      <header className={styles.header}>
+      <header className={`${styles.header} fade-in`}>
+        <div className={styles.heroBadge}>✨ Level Up Your Communication</div>
         <h1 className={styles.title}>{dict.title}</h1>
         <p className={styles.subtitle}>{dict.subtitle}</p>
       </header>
@@ -180,10 +181,12 @@ export default function Home() {
           <label className={styles.label}>{dict.imageLabel}</label>
           
           {!image ? (
-            <div className={styles.fileInputWrapper}>
-              <button type="button" className={styles.secondaryButton} onClick={() => document.getElementById('fileInput')?.click()}>
-                {dict.imageButton}
-              </button>
+            <div 
+              className={styles.fileDropZone}
+              onClick={() => document.getElementById('fileInput')?.click()}
+            >
+              <span style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📷</span>
+              <span className={styles.fileDropText}>{dict.imageButton}</span>
               <input 
                 id="fileInput"
                 type="file" 
@@ -193,10 +196,10 @@ export default function Home() {
               />
             </div>
           ) : (
-            <div className={styles.imagePreview}>
+            <div className={`${styles.imagePreview} fade-in`}>
               <img src={image} alt="Preview" className={styles.previewImg} />
               <button type="button" onClick={removeImage} className={styles.removeButton}>
-                {dict.removeImage}
+                ✕ {dict.removeImage}
               </button>
             </div>
           )}
