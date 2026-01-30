@@ -9,11 +9,30 @@ export async function POST(request: Request) {
   try {
     const body: AnalysisRequest = await request.json();
     
-    // Basic validation
-    // Basic validation
+    // 1. Origin Validation (Security)
+    const origin = request.headers.get('origin');
+    const allowedOrigins = ['conversation-tool.pages.dev', 'localhost'];
+    const isAllowed = origin && allowedOrigins.some(allowed => origin.includes(allowed));
+
+    if (process.env.NODE_ENV === 'production' && !isAllowed) {
+      return NextResponse.json(
+        { error: 'Unauthorized origin' },
+        { status: 403 }
+      );
+    }
+
+    // 2. Input Validation (Security & Cost)
     if ((!body.conversation && !body.image) || !body.mode || !body.goal) {
       return NextResponse.json(
         { error: 'Missing required fields (text or image required)' }, 
+        { status: 400 }
+      );
+    }
+
+    // Limit text length to 5000 characters to prevent abuse
+    if (body.conversation && body.conversation.length > 5000) {
+      return NextResponse.json(
+        { error: 'Conversation too long (max 5000 characters)' },
         { status: 400 }
       );
     }
