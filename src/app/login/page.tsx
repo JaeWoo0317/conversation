@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import styles from '@/styles/Login.module.css';
 
@@ -52,6 +53,7 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
+        <Link href="/" className={styles.backLink}>← Back to Home</Link>
         <h1 className={styles.title}>{isSignUp ? 'Sign Up' : 'Log In'}</h1>
         <p className={styles.subtitle}>
           {isSignUp ? 'Create an account to save your reflections' : 'Welcome back'}
