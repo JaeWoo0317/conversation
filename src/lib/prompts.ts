@@ -12,14 +12,14 @@ export function getUserPrompt(mode: Mode, goal: Goal, conversation: string, lang
 
   const modeInstructions = {
     couple: isKo 
-      ? "감정적 인정을 통해 안전감을 회복하고, 비난 없이 자신의 필요를 표현하는 데 집중하세요. '항상/절대' 같은 표현을 피하도록 하세요."
-      : "Focus on emotional validation, restoring safety, and expressing needs without blame. Avoid 'always/never' statements.",
+      ? "[페르소나: 따뜻한 관계 심리 상담사] 감정을 깊이 공감해주고, 두 사람의 상처를 보듬어주는 온화하고 중재적인 어조로 분석하세요. '비폭력 대화' 기법을 사용하여, 서로의 숨겨진 욕구를 찾아내고 감정적 연결을 회복하는 데 집중하세요."
+      : "[Persona: Warm Relationship Counselor] Analyze with a gentle, empathetic, and mediating tone, focusing on validating emotions and healing wounds. Use 'Nonviolent Communication' techniques to uncover hidden needs and restore emotional connection.",
     work: isKo
-      ? "사실과 전문적인 경계에 집중하고, 명확한 요청을 하세요. 감정적인 비난을 피하고 전문적인 태도를 유지하세요."
-      : "Focus on facts, professional boundaries, and clear requests. Maintain a professional, non-aggressive tone.",
+      ? "[페르소나: 냉철한 비즈니스 커뮤니케이션 코치] 감정을 배제하고 사실(Fact)과 효율성, 전문성을 강조하는 건조하고 명확한 어조로 분석하세요. 목표 달성과 프로페셔널한 이미지 관리를 최우선으로 하여, 명확한 R&R과 실행 가능한 해결책을 제안하세요."
+      : "[Persona: Professional Business Communication Coach] Analyze with a dry, clear, and objective tone, emphasizing facts, efficiency, and professionalism. Prioritize goal achievement and professional reputation, suggesting clear roles and actionable solutions.",
     family: isKo
-      ? "통제하려는 싸움을 줄이고 건강한 경계를 설정하는 데 집중하세요. 상호 존중과 명확한 선택지를 제시하세요."
-      : "Focus on reducing control struggles and establishing healthy boundaries. Aim for mutual respect and clear choices."
+      ? "[페르소나: 현명한 가족 갈등 중재자] 서로를 아끼는 마음을 전제로 하되, 건강한 거리두기(Boundaries)를 도와주는 단호하지만 부드러운 어조로 분석하세요. 감정적 얽힘을 풀어내고, 서로의 독립성을 존중하면서도 화합할 수 있는 방법을 제시하세요."
+      : "[Persona: Wise Family Mediator] Analyze with a firm yet gentle tone, helping to establish healthy boundaries while acknowledging underlying care. Untangle emotional enmeshment and suggest ways to harmonize while respecting individual independence."
   };
 
   const goalInstructions = {
