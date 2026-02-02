@@ -17,7 +17,8 @@ export const dictionaries = {
     modes: {
       couple: '커플 / 부부 (관계 회복)',
       work: '직장 / 비즈니스 (전문성)',
-      family: '가족 / 부모-자녀 (존중과 경계)'
+      family: '가족 / 부모-자녀 (존중과 경계)',
+      friend: '친구 / 우정 (오해와 화해)'
     },
     goals: {
       repair: '관계 회복 / 화해',
@@ -31,6 +32,12 @@ export const dictionaries = {
       light: '가벼운 언쟁',
       medium: '중요한 갈등',
       heavy: '심각한 위기'
+    },
+    gender: {
+        label: '상대방 성별 (Partner Gender)',
+        male: '남성',
+        female: '여성',
+        unspecified: '선택 안 함'
     },
     footer: {
       disclaimer: '본 서비스는 AI 심리 상담 검토 도구이며, 법적 또는 의학적 조언을 대체할 수 없습니다. 위기 상황 시 전문가의 도움을 받으세요.'
@@ -83,7 +90,8 @@ export const dictionaries = {
     modes: {
       couple: 'Couple / Relationship',
       work: 'Workplace / Professional',
-      family: 'Family / Parent-Child'
+      family: 'Family / Parent-Child',
+      friend: 'Friend / Friendship'
     },
     goals: {
       repair: 'Repair Relationship',
@@ -97,6 +105,12 @@ export const dictionaries = {
       light: 'Light Argument',
       medium: 'Major Conflict',
       heavy: 'Serious Crisis'
+    },
+    gender: {
+        label: 'Partner Gender',
+        male: 'Male',
+        female: 'Female',
+        unspecified: 'Unspecified'
     },
     footer: {
       disclaimer: 'This service is an AI counseling tool and does not replace legal or medical advice. Seek professional help in crisis situations.'

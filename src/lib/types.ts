@@ -1,11 +1,13 @@
-export type Mode = "couple" | "work" | "family";
+export type Mode = "couple" | "work" | "family" | "friend";
 export type Goal = "repair" | "persuate" | "agree" | "feedback" | "boundaries";
 export type Intensity = 'light' | 'medium' | 'heavy';
+export type PartnerGender = 'male' | 'female' | 'unspecified';
 
 export interface AnalysisRequest {
   mode: Mode;
   goal: Goal;
   intensity?: Intensity;
+  partnerGender?: PartnerGender;
   conversation: string;
   image?: string; // Base64 string
   language?: 'ko' | 'en';

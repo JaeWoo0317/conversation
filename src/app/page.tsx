@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '@/styles/Home.module.css';
-import { Mode, Goal } from '@/lib/types';
+import { Mode, Goal, PartnerGender } from '@/lib/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { createClient } from '@/lib/supabase/client';
 import LimitModal from '@/components/LimitModal';
@@ -16,6 +16,7 @@ export default function Home() {
   const [mode, setMode] = useState<Mode>('couple');
   const [goal, setGoal] = useState<Goal>('repair');
   const [intensity, setIntensity] = useState<'light'|'medium'|'heavy'>('medium');
+  const [partnerGender, setPartnerGender] = useState<PartnerGender>('unspecified');
   const [conversation, setConversation] = useState('');
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -83,7 +84,7 @@ export default function Home() {
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode, goal, intensity, conversation, image, language }),
+        body: JSON.stringify({ mode, goal, intensity, partnerGender, conversation, image, language }),
       });
 
       if (!res.ok) throw new Error('Analysis failed');
@@ -124,6 +125,7 @@ export default function Home() {
             <option value="couple">{dict.modes.couple}</option>
             <option value="work">{dict.modes.work}</option>
             <option value="family">{dict.modes.family}</option>
+            <option value="friend">{dict.modes.friend}</option>
           </select>
         </div>
 

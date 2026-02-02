@@ -7,8 +7,8 @@ You must always output valid JSON adhering strictly to the schema provided.
 Do not use markdown formatting in the JSON output.
 The tone should be empathetic, objective, and solution-oriented.`;
 
-export function getUserPrompt(mode: Mode, goal: Goal, intensity: Intensity, conversation: string, language: Language = 'ko'): string {
-  const isKo = language === 'ko';
+export function getUserPrompt(mode: Mode, goal: Goal, intensity: Intensity, conversation: string, language: Language = 'ko', partnerGender: 'male' | 'female' | 'unspecified' = 'unspecified'): string {
+    const isKo = language === 'ko';
 
   const modeInstructions = {
     couple: isKo 
@@ -19,7 +19,10 @@ export function getUserPrompt(mode: Mode, goal: Goal, intensity: Intensity, conv
       : "[Persona: Professional Business Communication Coach] Analyze with a dry, clear, and objective tone, emphasizing facts, efficiency, and professionalism. Prioritize goal achievement and professional reputation, suggesting clear roles and actionable solutions.",
     family: isKo
       ? "[페르소나: 현명한 가족 갈등 중재자] 서로를 아끼는 마음을 전제로 하되, 건강한 거리두기(Boundaries)를 도와주는 단호하지만 부드러운 어조로 분석하세요. 감정적 얽힘을 풀어내고, 서로의 독립성을 존중하면서도 화합할 수 있는 방법을 제시하세요."
-      : "[Persona: Wise Family Mediator] Analyze with a firm yet gentle tone, helping to establish healthy boundaries while acknowledging underlying care. Untangle emotional enmeshment and suggest ways to harmonize while respecting individual independence."
+      : "[Persona: Wise Family Mediator] Analyze with a firm yet gentle tone, helping to establish healthy boundaries while acknowledging underlying care. Untangle emotional enmeshment and suggest ways to harmonize while respecting individual independence.",
+    friend: isKo
+        ? "[페르소나: 공감하는 또래 중재자] 친구 사이의 편안함과 신뢰를 바탕으로 한 솔직하고 따뜻한 어조로 분석하세요. 사소한 오해가 우정에 금이 가지 않도록, 서로의 '선의(Good Intentions)'를 확인시켜주고 자존심을 건드리지 않으면서 화해할 수 있는 팁을 주세요."
+        : "[Persona: Empathetic Peer Mediator] Analyze with a candid and warm tone based on the comfort and trust of friendship. To prevent minor misunderstandings from damaging the friendship, highlight ‘good intentions’ and provide tips for reconciliation without hurting pride."
   };
 
   const goalInstructions = {
@@ -55,6 +58,10 @@ export function getUserPrompt(mode: Mode, goal: Goal, intensity: Intensity, conv
       ? "갈등 강도가 '심각함'입니다. 안전을 최우선으로 하고, 자극적인 표현을 삼가며 신중하고 방어적인 접근을 권장하세요."
       : "Intensity is 'Heavy'. Prioritize safety, avoid triggering language, and recommend a cautious, defensive approach."
   };
+
+  const genderContext = partnerGender !== 'unspecified'
+    ? (isKo ? `- 상대방 성별: ${partnerGender === 'male' ? '남성' : '여성'} (이 정보를 바탕으로 자연스러운 호칭과 맥락을 사용하세요)` : `- Partner Gender: ${partnerGender} (Use appropriate pronouns and context based on this info)`)
+    : '';
 
   const jsonStructure = isKo ? `
 {
@@ -168,6 +175,7 @@ Context:
 - Mode: ${mode} (${modeInstructions[mode]})
 - Goal: ${goal} (${goalInstructions[goal]})
 - Intensity: ${intensity} (${intensityInstructions[intensity]})
+${genderContext}
 
 Provide a JSON response with the following structure:
 ${jsonStructure}
